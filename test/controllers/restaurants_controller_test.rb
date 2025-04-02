@@ -58,5 +58,5 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   
     assert_equal initial_will_split_votes + 1, restaurant.will_split_votes
   end
-  
+
 end
