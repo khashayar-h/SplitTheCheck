@@ -1,2 +1,33 @@
-<h1>Restaurants#index</h1>
-<p>Find me in app/views/restaurants/index.html.erb</p>
+<div class="container">
+    <h1 class="app-header">Split The Check</h1>
+
+  <%= form_with url: search_restaurants_path, method: :get, local: true, class: "d-flex justify-content-center mb-3" do %>
+    <input type="text" name="query" placeholder="Search by name or location" class="form-control w-50">
+    <button type="submit" class="btn btn-primary ms-2">Search</button>
+  <% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Votes (Will Split / Won't Split)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @restaurants.each do |restaurant| %>
+        <tr>
+          <td><%= link_to restaurant.name, restaurant, class: "text-primary" %></td>
+          <td><%= restaurant.location %></td>
+          <td><%= restaurant.will_split_votes %> / <%= restaurant.wont_split_votes %></td>
+          <td>
+            <%= link_to "Vote", restaurant_path(restaurant), class: "btn btn-warning" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Add New Restaurant", new_restaurant_path, class: "btn btn-success mt-3" %>
+</div>

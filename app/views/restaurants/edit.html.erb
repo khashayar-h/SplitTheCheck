@@ -1,2 +1,25 @@
-<h1>Restaurants#edit</h1>
-<p>Find me in app/views/restaurants/edit.html.erb</p>
+<div class="container">
+  <h1 class="text-center mb-4">Edit Restaurant</h1>
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <%= form_with(model: @restaurant, local: true, class: "form-container") do |form| %>
+        <div class="mb-4">
+          <%= form.label :name, class: "form-label" %>
+          <%= form.text_field :name, class: "form-control form-input", placeholder: "Restaurant Name" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :location, class: "form-label" %>
+          <%= form.text_field :location, class: "form-control form-input", placeholder: "Restaurant Location" %>
+        </div>
+
+        <div class="mb-4 text-center">
+          <%= form.submit "Update Restaurant", class: "btn btn-success btn-lg d-block mx-auto w-100" %>
+        </div>
+      <% end %>
+
+      <%= link_to "Back to Restaurant", @restaurant, class: "btn btn-secondary btn-lg d-block mx-auto" %>
+    </div>
+  </div>
+</div>

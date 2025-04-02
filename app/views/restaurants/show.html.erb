@@ -1,2 +1,32 @@
-<h1>Restaurants#show</h1>
-<p>Find me in app/views/restaurants/show.html.erb</p>
+<div class="container">
+  <h1 class="text-center mb-4"><%= @restaurant.name %></h1>
+  
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <p class="lead text-center">Location: <%= @restaurant.location %></p>
+      
+      <div class="d-flex justify-content-center">
+        <p><strong>Votes:</strong></p>
+      </div>
+      
+      <div class="d-flex justify-content-around mb-4">
+        <div class="vote-card">
+          <h3 class="text-success">✅ Will Split</h3>
+          <p><%= @restaurant.will_split_votes %> votes</p>
+          <%= button_to "Vote: Will Split", vote_restaurant_path(@restaurant, vote: "will_split"), method: :post, class: "btn btn-success btn-lg" %>
+        </div>
+        
+        <div class="vote-card">
+          <h3 class="text-danger">❌ Won't Split</h3>
+          <p><%= @restaurant.wont_split_votes %> votes</p>
+          <%= button_to "Vote: Won't Split", vote_restaurant_path(@restaurant, vote: "wont_split"), method: :post, class: "btn btn-danger btn-lg" %>
+        </div>
+      </div>
+
+      <!-- Edit Button -->
+      <%= link_to 'Edit Restaurant', edit_restaurant_path(@restaurant), class: 'btn btn-warning btn-lg d-block mx-auto mt-4' %>
+
+      <%= link_to "Back to Restaurants", restaurants_path, class: "btn btn-primary btn-lg d-block mx-auto mt-4" %>
+    </div>
+  </div>
+</div>
