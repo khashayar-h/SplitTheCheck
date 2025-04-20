@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-
   resources :restaurants do
-    resources :votes, only: [:create]
-
     collection do
-      get :search
+      get 'search'
     end
+    resources :votes, only: [:create]
   end
+
+  root "restaurants#index"
 end
