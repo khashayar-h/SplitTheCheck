@@ -1,8 +1,13 @@
 require "test_helper"
+puts "Devise mappings: #{Devise.mappings.inspect}"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @restaurant = Restaurant.create(name: "Test Place", location: "New York", will_split_votes: 5, wont_split_votes: 2)
+    @restaurant = Restaurant.create!(name: "Test Place", location: "New York")
+    @user = User.create!(email: "user#{rand(1000)}@example.com", password: "password")
+    sign_in_as(@user)
   end
 
   test "should get index" do
@@ -22,13 +27,13 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "form"
   end
+
   test "should create restaurant and redirect to index" do
     assert_difference('Restaurant.count', 1) do
-      post restaurants_url, params: { restaurant: { name: "Test Restaurant", location: "Test Location", will_split: 1, wont_split: 0 } }
+      post restaurants_url, params: { restaurant: { name: "Test Restaurant", location: "Test Location" } }
     end
-      assert_redirected_to restaurants_path
+    assert_redirected_to restaurants_path
   end
-  
 
   test "should get edit" do
     get edit_restaurant_url(@restaurant)
@@ -44,19 +49,14 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should search for a restaurant" do
-    get search_restaurants_url, params: { query: "Test" } if defined?(search_restaurants_url)
-    assert_response :success if defined?(search_restaurants_url)
+    get search_restaurants_url, params: { query: "Test" }
+    assert_response :success
   end
 
   test "should vote for a restaurant" do
-    restaurant = restaurants(:one)
-    initial_will_split_votes = restaurant.will_split_votes
-  
-    post vote_restaurant_url(restaurant, vote: "will_split")
-  
-    restaurant.reload
-  
-    assert_equal initial_will_split_votes + 1, restaurant.will_split_votes
+    assert_difference('Vote.count', 1) do
+      post restaurant_votes_path(@restaurant), params: { vote_type: "will_split" }
+    end
+    assert_redirected_to restaurant_path(@restaurant)
   end
-
 end
