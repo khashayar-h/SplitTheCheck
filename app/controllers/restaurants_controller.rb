@@ -1,12 +1,11 @@
 class RestaurantsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :search]
   before_action :set_restaurant, only: [:show, :edit, :update, :vote]
 
   # List all restaurants
   def index
-    @restaurants = Restaurant.all
-  end
-
+    @restaurants = Restaurant.all.includes(:votes)
+  end  
 
   # Display the form to add a new restaurant
   def new
