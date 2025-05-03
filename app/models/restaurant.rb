@@ -8,4 +8,6 @@ class Restaurant < ApplicationRecord
   def wont_split_votes
     votes.where(vote_type: 'wont_split').count
   end
+  has_many :comments
+  has_many :favorites
 end

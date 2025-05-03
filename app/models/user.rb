@@ -5,4 +5,6 @@ class User < ApplicationRecord
 
   # Associations
   has_many :votes
+  has_many :comments
+  has_many :favorites
 end
