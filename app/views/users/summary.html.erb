@@ -1,0 +1,30 @@
+<div class="container">
+  <h2 class="text-center my-4">Your Activity Summary</h2>
+
+  <div class="mb-4">
+    <h4>Your Comments</h4>
+    <% @comments.each do |comment| %>
+      <div class="border rounded p-2 mb-2">
+        <p><strong><%= comment.restaurant.name %>:</strong> <%= comment.content %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-4">
+    <h4>Your Votes</h4>
+    <% @votes.each do |vote| %>
+      <div class="border rounded p-2 mb-2">
+        <p><strong><%= vote.restaurant.name %>:</strong> Voted <%= vote.vote_type %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-4">
+    <h4>Your Favorite Restaurants</h4>
+    <% @favorites.each do |restaurant| %>
+      <div class="border rounded p-2 mb-2">
+        <p><%= link_to restaurant.name, restaurant_path(restaurant) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

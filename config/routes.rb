@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get "users/summary"
   get "favorites/create"
   get "favorites/destroy"
+  get "user/summary", to: "users#summary", as: :user_summary
   devise_for :users
 
   resources :restaurants do
