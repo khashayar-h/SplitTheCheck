@@ -31,10 +31,34 @@
         </div>
       </div>
 
-      <!-- Edit Button -->
+      <!-- Edit & Back Buttons -->
       <%= link_to 'Edit Restaurant', edit_restaurant_path(@restaurant), class: 'btn btn-warning btn-lg d-block mx-auto mt-4' %>
-
       <%= link_to "Back to Restaurants", restaurants_path, class: "btn btn-primary btn-lg d-block mx-auto mt-3" %>
+
+      <!-- Comments Section -->
+      <div class="mt-5">
+        <h4 class="text-center">Comments</h4>
+        <% @restaurant.comments.each do |comment| %>
+          <div class="border rounded p-2 mb-2">
+            <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+            <% if comment.user == current_user %>
+              <%= link_to "Delete", comment_path(comment), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if user_signed_in? %>
+          <%= form_with(model: [@restaurant, Comment.new], local: true) do |form| %>
+            <div class="mb-3">
+              <%= form.label :content, "Add a Comment" %>
+              <%= form.text_area :content, class: "form-control", rows: 3 %>
+            </div>
+            <%= form.submit "Post", class: "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <p class="text-center mt-3"><a href="/users/sign_in">Sign in to post a comment</a></p>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
