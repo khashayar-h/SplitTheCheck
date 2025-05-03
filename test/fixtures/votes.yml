@@ -1,4 +1,4 @@
 one:
   user: one
   restaurant: one
-  content: Sample comment
+  vote_type: will_split
